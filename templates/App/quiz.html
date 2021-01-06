@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Quiz{% endblock title %}
+{% block body %}
+<hr>
+<div class="container">
+<form action='/answer' method="POST">
+{% csrf_token %}
+   {% for question in questions %}
+   <div class = 'question'>Q.{{id}}{{ question.question}}</div><br>
+   <div id= "choices" class='select' required>
+    <input type = "radio" name="{{question.id}}" value="{{question.choice_one}}"required>{{question.choice_one}}<br>
+    <input type = "radio" name="{{question.id}}" value="{{question.choice_two}}">{{question.choice_two}}<br>
+    <input type = "radio" name="{{question.id}}" value="{{question.choice_three}}">{{question.choice_three}}<br>
+    <input type = "radio" name="{{question.id}}" value="{{question.choice_four}}">{{question.choice_four}}<br>
+</div>
+<br> 
+    {% endfor %}
+<div style="text-align:center"> 
+<input style="padding: 10px 35px;font-size:120%;cursor: pointer;" type="submit" class="submit" id="submit" value="Submit"/>
+</div>
+    
+</form>
+</div>
+<!--Pagination-->
+<div class="container" style="margin-left: 40%;">
+    <div class="pagination" >
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+</div>
+
+   
+
+
+
+
+
+{% endblock body %}
